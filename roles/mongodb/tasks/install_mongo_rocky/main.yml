@@ -36,4 +36,12 @@
     name: "{{ mongo_service }}"
     enabled: yes
  
+- name: Install MongoDB packages
+  become: true
+  yum:
+    name:
+       - mongodb-org
+       - mongodb-org-server
+       - mongodb-org-shell
+    state: present
 
