@@ -1,17 +1,5 @@
 ---
-- name: Install MongoDB packages
-  become: true
-  yum:
-    name:
-      - mongodb-org
-      - mongodb-org-server
-      - mongodb-org-shell
-    state: present
 
-- name: Update package cache
-  become: true
-  package:
-    update_cache: yes
 
 - name: Create MongoDB user
   become: true
