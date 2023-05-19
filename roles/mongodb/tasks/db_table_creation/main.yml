@@ -2,7 +2,7 @@
 
 
 - name: Create and Add | Collection and documents | Creates second collection and adds documents to it
-  shell: mongosh geetha --eval 'db.geetha.insertMany([{"name":"Divakar Kanakarajan","role":"project sponspor"},{"name":"Prem","role":"product owner"},{"name":"Nirav","role":"Project manager"},{"name":"Anand","role":"Delivery Manager"},{"name":"Ajendra Diwakar","role":"Technology Architect"},{"name":"Kshiti Desai","role":"Delivery Lead"},{"name":"Amit","role":"Technology lead"},{"name":"YOG","role":"Technology lead"}]);'
+  shell: mongosh geetha --eval 'db.yamini.insertMany([{"name":"Divakar Kanakarajan","role":"project sponspor"},{"name":"Prem","role":"product owner"},{"name":"Nirav","role":"Project manager"},{"name":"Anand","role":"Delivery Manager"},{"name":"Ajendra Diwakar","role":"Technology Architect"},{"name":"Kshiti Desai","role":"Delivery Lead"},{"name":"Amit","role":"Technology lead"},{"name":"YOG","role":"Technology lead"}]);'
 
 
 
