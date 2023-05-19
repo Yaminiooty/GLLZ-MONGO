@@ -22,6 +22,7 @@
   become: true
   yum:
     name: "{{ mongodb_package_name }}"
+    update_cache=yes
     state: present
 
 - name: start | mongod | Start MongoDB service
@@ -36,12 +37,4 @@
     name: "{{ mongo_service }}"
     enabled: yes
  
-- name: Install MongoDB packages
-  become: true
-  yum:
-    name:
-       - mongodb-org
-       - mongodb-org-server
-       - mongodb-org-shell
-    state: present
 
