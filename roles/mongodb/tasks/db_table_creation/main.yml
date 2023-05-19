@@ -5,11 +5,7 @@
   become: true
   shell: |
     mongosh admin --eval '
-    db.createUser({
-      user: "{{mongo_user}}",
-      pwd: "{{mongo_password}}",
-      roles: [{ role: "root", db: "admin" }]
-    })'
+   db.createUser({user:{{ mongo_user }},pwd:{{mongo_password}},roles: [ { role:'root', db:'admin' } ] });'
 
 
 - name: Create MongoDB database
