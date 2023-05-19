@@ -1,24 +1,35 @@
 ---
 
 
-- name: Create MongoDB user
-  become: true
-  shell: "mongo admin --eval 'db.createUser({ user: \"{{ mongo_user }}\", pwd: \"{{ mongo_password }}\", roles: [ { role: \"readWrite\", db: \"admin\" } ] })'"
-  register: create_user_output
-  ignore_errors: yes
-
-- name: Check if MongoDB user already exists
-  become: true
-  shell: "mongo admin --eval 'db.getUser(\"{{ mongo_user }}\")' | grep \"{{ mongo_user }}\""
-  register: user_exists_output
-  ignore_errors: yes
-
-- name: Grant privileges to MongoDB user
-  become: true
-  shell: "mongo admin --eval 'db.grantRolesToUser(\"{{ mongo_user }}\", [ { role: \"dbOwner\", db: \"admin\" } ])'"
-  when: user_exists_output.stdout.find(\"{{ mongo_user }}\") == -1
-
-- name: Execute MongoDB commands
+- name: Create MongoDB user and grant privileges
   become: true
   shell: |
-    mongo --authenticationDatabase admin -u \"{{ mongo_user }}\" -p \"{{ mongo_password }}\" --eval 'use gllzmembers; db.createCollection(\"Dev\"); db.createCollection(\"Managers\")'
+    mongosh admin --eval '
+    db.createUser({
+      user: "mongo_user",
+      pwd: "mongo_password",
+      roles: [{ role: "root", db: "admin" }]
+    })'
+
+
+- name: Create MongoDB database
+  become: true
+  shell: |
+    mongosh --username "{{ mongo_user }}" --password "{{ mongo_password }}" --authenticationDatabase "admin" --eval '
+      db.getSiblingDB("{{dbname}}").createCollection("{{collection}}")'
+
+- name: Insert documents into MongoDB collection
+  become: true
+  shell: |
+    mongosh --username "{{ mongo_user }}" --password "{{ mongo_password }}" --authenticationDatabase "admin" --eval '
+      db.getSiblingDB("{{dbname}}")."{{collection}}".insertMany([
+        { "field1": "value1", "field2": "value2" },
+        { "field1": "value3", "field2": "value4" }
+      ])'
+
+
+
+
+
+
+
