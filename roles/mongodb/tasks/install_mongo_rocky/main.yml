@@ -22,8 +22,12 @@
   become: true
   yum:
     name: "{{ mongodb_package_name }}"
-    update_cache=yes
     state: present
+    
+- name: Update package cache
+  become: true
+  package:
+    update_cache: yes
 
 - name: start | mongod | Start MongoDB service
   become: true
