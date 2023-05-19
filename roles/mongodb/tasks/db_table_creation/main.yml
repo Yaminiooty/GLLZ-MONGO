@@ -1,23 +1,23 @@
 ---
 - name: Create MongoDB user
   become: true
-  shell: mongosh admin --eval 'db.createUser({ user: "{{ mongo_user }}", pwd: "{{ mongo_password }}", roles: [ { role: "readWrite", db: "admin" } ] })'
+  shell: 'mongo admin --eval "db.createUser({ user: \"{{ mongo_user }}\", pwd: \"{{ mongo_password }}\", roles: [ { role: \"readWrite\", db: \"admin\" } ] })"'
   register: create_user_output
   ignore_errors: yes
 
 - name: Check if MongoDB user already exists
   become: true
-  shell: mongosh admin --eval 'db.getUser("{{ mongo_user }}")' | grep "{{ mongo_user }}"
+  shell: 'mongo admin --eval "db.getUser(\"{{ mongo_user }}\")" | grep "{{ mongo_user }}"'
   register: user_exists_output
   ignore_errors: yes
 
 - name: Grant privileges to MongoDB user
   become: true
-  shell: mongosh admin --eval 'db.grantRolesToUser("{{ mongo_user }}", [ { role: "dbOwner", db: "admin" } ])'
+  shell: 'mongo admin --eval "db.grantRolesToUser(\"{{ mongo_user }}\", [ { role: \"dbOwner\", db: \"admin\" } ])"'
   when: user_exists_output.stdout.find("{{ mongo_user }}") == -1
 
 - name: Execute MongoDB commands
   become: true
   shell: |
-    mongosh --authenticationDatabase admin -u "{{ mongo_user }}" -p "{{ mongo_password }}" --eval 'use {{dbname}}; db.createCollection("{{collection}}");'
+    mongo --authenticationDatabase admin -u "{{ mongo_user }}" -p "{{ mongo_password }}" --eval "use gllzmembers; db.createCollection(\"Dev\"); db.createCollection(\"Managers\");"
 
