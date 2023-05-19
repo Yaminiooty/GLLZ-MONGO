@@ -10,7 +10,7 @@
 
 
 - name: Create and Add | Collection and documents | Creates first collection and adds documents to it
-  shell: mongosh "{{dbname}}" --eval 'db.developers.insertMany([{"name":"Tarini"},{"name":"Srisharan"},{"name":"Bharat"},{"name":"Yamini"},{"name":"Ashok"},{"name":"Saranya"},{"name":"Sreehari"}])';
+  shell: mongosh "{{dbname}}" --eval 'db.{{collection}}.insertMany([{"name":"Tarini"},{"name":"Srisharan"},{"name":"Bharat"},{"name":"Yamini"},{"name":"Ashok"},{"name":"Saranya"},{"name":"Sreehari"}])';
 
 
 
