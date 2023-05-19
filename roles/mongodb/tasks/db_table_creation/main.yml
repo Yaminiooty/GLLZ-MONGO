@@ -1,12 +1,12 @@
 ---
 - name: Create | db | Creates a database
-  shell: mongosh --eval 'use Sairam';
+  shell: mongosh --eval 'use Sairam1';
 
 - name: Create | Collection | Creates first collection
-  shell: mongosh Sairam --eval 'db.createCollection("yamini");'
+  shell: mongosh Sairam1 --eval 'db.createCollection("yamini1");'
 
 - name: Create and Add | Collection and documents | Creates second collection and adds documents to it
-  shell: mongosh Sairam --eval 'db.yamini.insertMany([{"name":"Divakar Kanakarajan","role":"project sponspor"},{"name":"Prem","role":"product owner"},{"name":"Nirav","role":"Project manager"},{"name":"Anand","role":"Delivery Manager"},{"name":"Ajendra Diwakar","role":"Technology Architect"},{"name":"Kshiti Desai","role":"Delivery Lead"},{"name":"Amit","role":"Technology lead"},{"name":"YOG","role":"Technology lead"}]);'
+  shell: mongosh Sairam1 --eval 'db.yamini1.insertMany([{"name":"Divakar Kanakarajan","role":"project sponspor"},{"name":"Prem","role":"product owner"},{"name":"Nirav","role":"Project manager"},{"name":"Anand","role":"Delivery Manager"},{"name":"Ajendra Diwakar","role":"Technology Architect"},{"name":"Kshiti Desai","role":"Delivery Lead"},{"name":"Amit","role":"Technology lead"},{"name":"YOG","role":"Technology lead"}]);'
 
 
 
