@@ -1,16 +1,8 @@
 ---
 
 
-- name: Create | db | Creates a database
-  shell: mongosh --eval 'use {{dbname}};'
-
-- name: Create | Collection | Creates first collection
-  shell: mongosh "{{dbname}}" --eval 'db.createCollection("{{collection}}");'
-
-
-
-- name: Create and Add | Collection and documents | Creates first collection and adds documents to it
-  shell: mongosh "{{dbname}}" --eval 'db.{{collection}}.insertMany([{"name":"Tarini"},{"name":"Srisharan"},{"name":"Bharat"},{"name":"Yamini"},{"name":"Ashok"},{"name":"Saranya"},{"name":"Sreehari"}]);'
+- name: Create and Add | Collection and documents | Creates second collection and adds documents to it
+  shell: mongosh geetha --eval 'db.geetha.insertMany([{"name":"Divakar Kanakarajan","role":"project sponspor"},{"name":"Prem","role":"product owner"},{"name":"Nirav","role":"Project manager"},{"name":"Anand","role":"Delivery Manager"},{"name":"Ajendra Diwakar","role":"Technology Architect"},{"name":"Kshiti Desai","role":"Delivery Lead"},{"name":"Amit","role":"Technology lead"},{"name":"YOG","role":"Technology lead"}]);'
 
 
 
