@@ -1,27 +1,17 @@
 ---
 
 
-- name: Create MongoDB user and grant privileges
-  become: true
-  shell: |
-    mongosh admin --eval '
-   db.createUser({user:{{ mongo_user }},pwd:{{mongo_password}},roles: [ { role:'root', db:'admin' } ] });'
+- name: Create | db | Creates a database
+  shell: mongosh --eval 'use {{dbname}}';
+
+- name: Create | Collection | Creates first collection
+  shell: mongosh "{{dbname}}" --eval 'db.createCollection("{{collection}}");'
 
 
-- name: Create MongoDB database
-  become: true
-  shell: |
-    mongosh --username "{{ mongo_user }}" --password "{{ mongo_password }}" --authenticationDatabase "admin" --eval '
-      db.getSiblingDB("{{dbname}}").createCollection("{{collection}}")'
 
-- name: Insert documents into MongoDB collection
-  become: true
-  shell: |
-    mongosh --username "{{ mongo_user }}" --password "{{ mongo_password }}" --authenticationDatabase "admin" --eval '
-      db.getSiblingDB("{{dbname}}")."{{collection}}".insertMany([
-        { "field1": "value1", "field2": "value2" },
-        { "field1": "value3", "field2": "value4" }
-      ])'
+- name: Create and Add | Collection and documents | Creates first collection and adds documents to it
+  shell: mongosh "{{dbname}}" --eval 'db.developers.insertMany([{"name":"Tarini"},{"name":"Srisharan"},{"name":"Bharat"},{"name":"Yamini"},{"name":"Ashok"},{"name":"Saranya"},{"name":"Sreehari"}])';
+
 
 
 
