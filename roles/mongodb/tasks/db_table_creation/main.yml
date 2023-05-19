@@ -3,7 +3,7 @@
   shell: mongosh --eval 'use Sairam';
 
 - name: Create | Collection | Creates first collection
-  shell: mongosh gllzmembers --eval 'db.createCollection("Dev");'
+  shell: mongosh Sairam --eval 'db.createCollection("yamini");'
 
 - name: Create and Add | Collection and documents | Creates second collection and adds documents to it
   shell: mongosh Sairam --eval 'db.yamini.insertMany([{"name":"Divakar Kanakarajan","role":"project sponspor"},{"name":"Prem","role":"product owner"},{"name":"Nirav","role":"Project manager"},{"name":"Anand","role":"Delivery Manager"},{"name":"Ajendra Diwakar","role":"Technology Architect"},{"name":"Kshiti Desai","role":"Delivery Lead"},{"name":"Amit","role":"Technology lead"},{"name":"YOG","role":"Technology lead"}]);'
