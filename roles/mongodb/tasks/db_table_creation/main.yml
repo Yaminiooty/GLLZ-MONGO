@@ -1,23 +1,36 @@
 ---
+- name: Install MongoDB packages
+  become: true
+  yum:
+    name:
+      - mongodb-org
+      - mongodb-org-server
+      - mongodb-org-shell
+    state: present
+
+- name: Update package cache
+  become: true
+  package:
+    update_cache: yes
+
 - name: Create MongoDB user
   become: true
-  shell: 'mongo admin --eval "db.createUser({ user: \"{{ mongo_user }}\", pwd: \"{{ mongo_password }}\", roles: [ { role: \"readWrite\", db: \"admin\" } ] })"'
+  shell: "mongo admin --eval 'db.createUser({ user: \"{{ mongo_user }}\", pwd: \"{{ mongo_password }}\", roles: [ { role: \"readWrite\", db: \"admin\" } ] })'"
   register: create_user_output
   ignore_errors: yes
 
 - name: Check if MongoDB user already exists
   become: true
-  shell: 'mongo admin --eval "db.getUser(\"{{ mongo_user }}\")" | grep "{{ mongo_user }}"'
+  shell: "mongo admin --eval 'db.getUser(\"{{ mongo_user }}\")' | grep \"{{ mongo_user }}\""
   register: user_exists_output
   ignore_errors: yes
 
 - name: Grant privileges to MongoDB user
   become: true
-  shell: 'mongo admin --eval "db.grantRolesToUser(\"{{ mongo_user }}\", [ { role: \"dbOwner\", db: \"admin\" } ])"'
-  when: user_exists_output.stdout.find("{{ mongo_user }}") == -1
+  shell: "mongo admin --eval 'db.grantRolesToUser(\"{{ mongo_user }}\", [ { role: \"dbOwner\", db: \"admin\" } ])'"
+  when: user_exists_output.stdout.find(\"{{ mongo_user }}\") == -1
 
 - name: Execute MongoDB commands
   become: true
   shell: |
-    mongo --authenticationDatabase admin -u "{{ mongo_user }}" -p "{{ mongo_password }}" --eval "use gllzmembers; db.createCollection(\"Dev\"); db.createCollection(\"Managers\");"
-
+    mongo --authenticationDatabase admin -u \"{{ mongo_user }}\" -p \"{{ mongo_password }}\" --eval 'use gllzmembers; db.createCollection(\"Dev\"); db.createCollection(\"Managers\")'
